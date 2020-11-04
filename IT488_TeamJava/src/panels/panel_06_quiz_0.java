@@ -4,20 +4,18 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
 import main.start;
-import utility.RoundedBorder;
 
 @SuppressWarnings("serial")
 public class panel_06_quiz_0 extends JPanel{
@@ -29,12 +27,45 @@ public class panel_06_quiz_0 extends JPanel{
 	TitledBorder titleBorder;
 	JLabel lblTitle;
 	JLabel lblSubTitle;
-	JButton btnNext;
-	JButton btnResults;
-	Font defaultFont;
-	String subTitle;
-	JButton btnPanel00;
 	
+	JLabel lblQuestion;
+	
+	JLabel lblBarQuiz;
+	JProgressBar barQuiz;
+	ActionListener onClick;
+	JButton btnNext;
+	JButton btnFinish;
+	
+	/**
+	 *  Fields, Variables
+	 */
+	String subTitle = "Quiz Type 0";
+	String txtBtnNext = "Next Question";
+	String txtBtnFinish = "Finish Quiz";
+	int numQuizLen = 20;
+	int numQuizCur = 1;
+	String[] txtQuestion = {
+		"This is what it is?",
+		"And another...",
+		"And another...",
+		"And another...",
+		"And another...",
+		"And another...",
+		"And another...",
+		"And another...",
+		"And another...",
+		"And another...",
+		"And another...",
+		"And another...",
+		"And another...",
+		"And another...",
+		"And another...",
+		"And another...",
+		"And another...",
+		"And another...",
+		"And another...",
+		"And another..."
+	};
 	
 	/**
 	 * Create the panel.
@@ -44,7 +75,6 @@ public class panel_06_quiz_0 extends JPanel{
 		setLayout(null);
 		setFocusable(true);
 		requestFocus();
-		subTitle = "Past Results";
 		contentPanel = panel;
 		createGUI();
 	} /* end panel_00_test */
@@ -56,74 +86,118 @@ public class panel_06_quiz_0 extends JPanel{
 	private void createGUI(){
 		
 		/* adjustable sizing */
-		int x = 3;
-		int y = 5;
+		int borderX = 3;
+		int borderY = 5;
 		int width = start.WIDTH - 9;
 		int height = start.HEIGHT - 30;
+		
 		int elementWidth  = 250;
 		int elementHeight = 35;
-		int elementX = (int)((x + width - elementWidth) * 0.50f);
+		int elementX = (int)(elementWidth * 0.5f);
 		int elementY = 30;
-		int spread = 55;
 		
-		/* get default font */
-		Graphics g = new BufferedImage(start.WIDTH, start.HEIGHT, BufferedImage.TYPE_INT_RGB).getGraphics();
-		defaultFont = new Font(g.getFont().toString(), 0, 12);
-        g.dispose();
+		int spread = 55;
 		
 		/* title label */
 		lblTitle = new JLabel(start.TITLE);
-		lblTitle.setFont(new Font(defaultFont.toString(), Font.BOLD, (int)(spread * 0.70f)));
+		lblTitle.setFont(new Font(start.defaultFont.toString(), Font.BOLD, (int)(spread * 0.70f)));
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setBounds(elementX, elementY, elementWidth, elementHeight);
 		add(lblTitle);
 		
 		/* subtitle label */
-		lblSubTitle = new JLabel(subTitle);
 		elementY += (int)(spread * 0.50f);
-		lblSubTitle.setFont(new Font(defaultFont.toString(), Font.PLAIN, (int)(spread * 0.25f)));
+		lblSubTitle = new JLabel(subTitle);
+		lblSubTitle.setFont(new Font(start.defaultFont.toString(), Font.PLAIN, (int)(spread * 0.25f)));
 		lblSubTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSubTitle.setBounds(elementX, elementY, elementWidth, elementHeight);
 		add(lblSubTitle);
 		
-		/* spacer */
+		/* question */
 		elementY += spread;
-		elementY += spread;
-		elementY += spread;
+		lblQuestion = new JLabel(numQuizCur + ". " + txtQuestion[numQuizCur - 1]);
+		lblQuestion.setFont(new Font(start.defaultFont.toString(), Font.PLAIN, (int)(spread * 0.25f)));
+		lblQuestion.setHorizontalAlignment(SwingConstants.LEFT);
+		lblQuestion.setBounds(elementX, elementY, elementWidth, elementHeight);
+		add(lblQuestion);
+		
+		/* answer */
 		elementY += spread;
 		
-		/* next button */
-		btnNext = new JButton("Next =>");
+		
+		
+		
+		/* spacer */
 		elementY += spread;
+		
+		/* quiz progress bar label */
+		elementY += spread;
+		lblBarQuiz = new JLabel(numQuizCur + " of " + numQuizLen);
+		lblBarQuiz.setFont(new Font(start.defaultFont.toString(), Font.PLAIN, (int)(spread * 0.25f)));
+		lblBarQuiz.setHorizontalAlignment(SwingConstants.LEFT);
+		lblBarQuiz.setBounds(elementX - 50, elementY + 12, elementWidth + 100, elementHeight - 20);
+		add(lblBarQuiz);
+		
+		/* quiz progress bar */
+		barQuiz = new JProgressBar(numQuizCur - 1, numQuizLen);
+		barQuiz.setValue(numQuizCur);
+		barQuiz.setBounds(elementX - 50, elementY + 30, elementWidth + 100, elementHeight - 20);
+		barQuiz.setPreferredSize(new Dimension(getWidth() + 100, 50));
+		add(barQuiz);
+		
+		/* next button click listener */
+		onClick = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+        		barQuiz.setValue(++numQuizCur);
+        		lblBarQuiz.setText(numQuizCur + " of " + numQuizLen);
+        		if(numQuizCur >= numQuizLen) {
+        			btnNext.removeActionListener(onClick);
+        		}
+    			lblQuestion.setText(numQuizCur + ". " + txtQuestion[numQuizCur - 1]);
+            }
+        };
+		
+		/* next button */
+		elementY += spread;
+		btnNext = new JButton(txtBtnNext);
 		btnNext.setBounds(elementX, elementY, elementWidth, elementHeight);
-		btnNext.setBorder(new RoundedBorder(10));
+		btnNext.addActionListener(onClick);
 		add(btnNext);
 		
 		/* results button */
-		btnResults = new JButton("Past Results");
 		elementY += spread;
-		btnResults.setBounds(elementX, elementY, elementWidth, elementHeight);
-		btnResults.setBorder(new RoundedBorder(10));
-		add(btnResults);
-		
-		/* return to panel 00 button */
-		btnPanel00 = new JButton("Return to Panel 00");
-		btnPanel00.setBounds(332, 432, 130, 35);
-		btnPanel00.setBorder(new RoundedBorder(10));
-		btnPanel00.addActionListener( new ActionListener() {
+		btnFinish = new JButton(txtBtnFinish);
+		btnFinish.setBounds(elementX, elementY, elementWidth, elementHeight);
+		btnFinish.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	CardLayout cardlayout = (CardLayout)(contentPanel.getLayout());
-        		cardlayout.show(contentPanel, "Panel 00");
+            	numQuizCur = 1;
+        		barQuiz.setValue(numQuizCur);
+        		lblBarQuiz.setText(numQuizCur + " of " + numQuizLen);
+        		btnNext.removeActionListener(onClick);
+        		btnNext.addActionListener(onClick);
+    			lblQuestion.setText(numQuizCur + ". " + txtQuestion[numQuizCur - 1]);
             }
         });
-		add(btnPanel00);
+		add(btnFinish);
+		
+		/* return to panel 00 button */
+		if(start.DEBUG) {
+			JButton btnPanel00 = new JButton("Return to Panel 00");
+			btnPanel00.setBounds(332, 432, 130, 35);
+			btnPanel00.addActionListener( new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+	            	CardLayout cardlayout = (CardLayout)(contentPanel.getLayout());
+	        		cardlayout.show(contentPanel, "Panel 00");
+	            }
+	        });
+			add(btnPanel00);
+		}
 		
 		/* outline boarder */
-		JPanel conTitle = new JPanel();
-		conTitle.setBounds(x,  y, width, height);
-		titleBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray));
-		conTitle.setBorder(titleBorder);
-		add(conTitle);
+		JPanel panelBorder = new JPanel();
+		panelBorder.setBounds(borderX,  borderY, width, height);
+		panelBorder.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray)));
+		add(panelBorder);
 		
 	} /* createGUI */
 	

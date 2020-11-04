@@ -4,10 +4,8 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -23,7 +21,6 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
 import main.start;
-import utility.RoundedBorder;
 
 @SuppressWarnings("serial")
 public class panel_05_results extends JPanel{
@@ -37,10 +34,30 @@ public class panel_05_results extends JPanel{
 	JLabel lblSubTitle;
 	JButton btnNext;
 	JButton btnResults;
-	Font defaultFont;
-	String subTitle;
-	JButton btnPanel00;
 	
+	/**
+	 *  Fields, Variables
+	 */
+	String subTitle = "Past Results";
+	/* THE TABLE */
+	String[] columnNames = {
+		"Subject", "Theme", "#", "A+", "%", "Start", "End", "TOTAL"
+	};
+	Object[][] data = {
+		{"Math", "Addition", 20, 18, 90, "10:23:15am", "10:47:15am", "0:24:00"},
+		{"Science", "Earth", 10, 7, 70, "11:03:35am", "11:13:55am", "0:10:20"},
+		{"Physical Education", "Civil Wars of the World", 10, 7, 70, "11:03:35am", "11:13:55am", "0:10:20"},
+		{"English", "Addition", 20, 18, 90, "10:23:15am", "10:47:15am", "0:24:00"},
+		{"History", "Addition", 20, 18, 90, "10:23:15am", "10:47:15am", "0:24:00"},
+		{"Foreign Languages", "Addition", 100, 100, 100, "10:23:15am", "10:47:15am", "0:24:00"},
+		{"Music", "Addition", 20, 18, 90, "10:23:15am", "10:47:15am", "0:24:00"},
+		{"Food Preparation", "Addition", 20, 18, 90, "10:23:15am", "10:47:15am", "0:24:00"},
+		{"Technology", "Addition", 20, 18, 90, "10:23:15am", "10:47:15am", "0:24:00"},
+		{"Modern studies", "Addition", 20, 18, 90, "10:23:15am", "10:47:15am", "0:24:00"},
+		{"The Arts", "Addition", 20, 18, 90, "10:23:15am", "10:47:15am", "0:24:00"},
+	};
+	String txtBtnNext = "Next =>";
+	String txtBtnResult = "Past Results";
 	
 	/**
 	 * Create the panel.
@@ -50,7 +67,6 @@ public class panel_05_results extends JPanel{
 		setLayout(null);
 		setFocusable(true);
 		requestFocus();
-		subTitle = "Past Results";
 		contentPanel = panel;
 		createGUI();
 	} /* end panel_00_test */
@@ -62,69 +78,50 @@ public class panel_05_results extends JPanel{
 	private void createGUI(){
 		
 		/* adjustable sizing */
-		int x = 3;
-		int y = 5;
+		int borderX = 3;
+		int borderY = 5;
 		int width = start.WIDTH - 9;
 		int height = start.HEIGHT - 30;
+		
 		int elementWidth  = 250;
 		int elementHeight = 35;
-		int elementX = (int)((x + width - elementWidth) * 0.50f);
+		int elementX = (int)(elementWidth * 0.5f);
 		int elementY = 30;
-		int spread = 55;
 		
-		/* get default font */
-		Graphics g = new BufferedImage(start.WIDTH, start.HEIGHT, BufferedImage.TYPE_INT_RGB).getGraphics();
-		defaultFont = new Font(g.getFont().toString(), 0, 12);
-        g.dispose();
+		int spread = 55;
 		
 		/* title label */
 		lblTitle = new JLabel(start.TITLE);
-		lblTitle.setFont(new Font(defaultFont.toString(), Font.BOLD, (int)(spread * 0.70f)));
+		lblTitle.setFont(new Font(start.defaultFont.toString(), Font.BOLD, (int)(spread * 0.70f)));
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setBounds(elementX, elementY, elementWidth, elementHeight);
 		add(lblTitle);
 		
 		/* subtitle label */
-		lblSubTitle = new JLabel(subTitle);
 		elementY += (int)(spread * 0.50f);
-		lblSubTitle.setFont(new Font(defaultFont.toString(), Font.PLAIN, (int)(spread * 0.25f)));
+		lblSubTitle = new JLabel(subTitle);
+		lblSubTitle.setFont(new Font(start.defaultFont.toString(), Font.PLAIN, (int)(spread * 0.25f)));
 		lblSubTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSubTitle.setBounds(elementX, elementY, elementWidth, elementHeight);
 		add(lblSubTitle);
 		
+		/* adjust column size */
+		elementWidth = 452;
+		elementX = 13;
 		
-		/* THE TABLE */
-		String[] columnNames = {
-			"Subject", "Theme", "#", "A+", "%", "Start", "End", "TOTAL"
-		};
-		Object[][] data = {
-			{"Math", "Addition", 20, 18, 90, "10:23:15am", "10:47:15am", "0:24:00"},
-			{"Science", "Earth", 10, 7, 70, "11:03:35am", "11:13:55am", "0:10:20"},
-			{"Physical Education", "Civil Wars of the World", 10, 7, 70, "11:03:35am", "11:13:55am", "0:10:20"},
-			{"English", "Addition", 20, 18, 90, "10:23:15am", "10:47:15am", "0:24:00"},
-			{"History", "Addition", 20, 18, 90, "10:23:15am", "10:47:15am", "0:24:00"},
-			{"Foreign Languages", "Addition", 100, 100, 100, "10:23:15am", "10:47:15am", "0:24:00"},
-			{"Music", "Addition", 20, 18, 90, "10:23:15am", "10:47:15am", "0:24:00"},
-			{"Food Preparation", "Addition", 20, 18, 90, "10:23:15am", "10:47:15am", "0:24:00"},
-			{"Technology", "Addition", 20, 18, 90, "10:23:15am", "10:47:15am", "0:24:00"},
-			{"Modern studies", "Addition", 20, 18, 90, "10:23:15am", "10:47:15am", "0:24:00"},
-			{"The Arts", "Addition", 20, 18, 90, "10:23:15am", "10:47:15am", "0:24:00"},
-		};
-		
-		int resultsWidth = 200;
-		elementWidth += resultsWidth;
-		elementX = (int)((x + width - elementWidth) * 0.50f);
-		
+		/* table */
 		JTable table = new JTable(data, columnNames);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		table.setIntercellSpacing(new Dimension(10, 0));
+		table.setIntercellSpacing(new Dimension(5, 0));
 		table.setRowHeight(20);
 		table.setAutoCreateRowSorter(true);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
+		/* table header */
 		JTableHeader header = table.getTableHeader();
 	    header.setBackground(Color.WHITE);
 	    
+		/* table columns */
 		TableColumn column = null;
 		int colSize[] = {110, 110, 35, 35, 35, 80, 80, 60};
 		for (int i = 0; i < colSize.length; i++) {
@@ -133,15 +130,17 @@ public class panel_05_results extends JPanel{
 			column.setPreferredWidth(colSize[i]);
 		}
 		
-		JScrollPane scrollPane = new JScrollPane(table);
+		/* scrollPane for the table */
 		elementY += spread;
+		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(elementX, elementY - 20, elementWidth, (int)(spread * 3.5f) + 40);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		add(scrollPane);
-		elementWidth -= resultsWidth;
-		elementX = (int)((x + width - elementWidth) * 0.50f);
 		
+		/* adjust column size */
+		elementWidth = 250;
+		elementX = (int)(elementWidth * 0.5f);
 		
 		/* spacer */
 		elementY += spread;
@@ -149,37 +148,35 @@ public class panel_05_results extends JPanel{
 		elementY += spread;
 		
 		/* next button */
-		btnNext = new JButton("Next =>");
 		elementY += spread;
+		btnNext = new JButton(txtBtnNext);
 		btnNext.setBounds(elementX, elementY, elementWidth, elementHeight);
-		btnNext.setBorder(new RoundedBorder(10));
 		add(btnNext);
 		
 		/* results button */
-		btnResults = new JButton("Past Results");
 		elementY += spread;
+		btnResults = new JButton(txtBtnResult);
 		btnResults.setBounds(elementX, elementY, elementWidth, elementHeight);
-		btnResults.setBorder(new RoundedBorder(10));
 		add(btnResults);
 		
 		/* return to panel 00 button */
-		btnPanel00 = new JButton("Return to Panel 00");
-		btnPanel00.setBounds(332, 432, 130, 35);
-		btnPanel00.setBorder(new RoundedBorder(10));
-		btnPanel00.addActionListener( new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	CardLayout cardlayout = (CardLayout)(contentPanel.getLayout());
-        		cardlayout.show(contentPanel, "Panel 00");
-            }
-        });
-		add(btnPanel00);
+		if(start.DEBUG) {
+			JButton btnPanel00 = new JButton("Return to Panel 00");
+			btnPanel00.setBounds(332, 432, 130, 35);
+			btnPanel00.addActionListener( new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+	            	CardLayout cardlayout = (CardLayout)(contentPanel.getLayout());
+	        		cardlayout.show(contentPanel, "Panel 00");
+	            }
+	        });
+			add(btnPanel00);
+		}
 		
 		/* outline boarder */
-		JPanel conTitle = new JPanel();
-		conTitle.setBounds(x,  y, width, height);
-		titleBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray));
-		conTitle.setBorder(titleBorder);
-		add(conTitle);
+		JPanel panelBorder = new JPanel();
+		panelBorder.setBounds(borderX,  borderY, width, height);
+		panelBorder.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray)));
+		add(panelBorder);
 		
 	} /* createGUI */
 	

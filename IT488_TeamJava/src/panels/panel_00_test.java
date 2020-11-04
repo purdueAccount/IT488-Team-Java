@@ -4,10 +4,8 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -17,7 +15,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
 import main.start;
-import utility.RoundedBorder;
 
 @SuppressWarnings("serial")
 public class panel_00_test extends JPanel {
@@ -36,12 +33,20 @@ public class panel_00_test extends JPanel {
 	JButton btnPanel05;
 	JButton btnPanel06;
 	JButton btnPanel07;
-	JButton btnPanel08;
 	JButton btnExit;
-	Font defaultFont;
-	String subTitle;
-	JButton btnPanel00;
 	
+	/**
+	 *  Fields, Variables
+	 */
+	String txtSubTitle = "This is a Test Panel";
+	String txtBtnPanel01 = "Panel 01 Sign In";
+	String txtBtnPanel02 = "Panel 02 Sign Up";
+	String txtBtnPanel03 = "Panel 03 Subject";
+	String txtBtnPanel04 = "Panel 04 Theme";
+	String txtBtnPanel05 = "Panel 05 Past Results";
+	String txtBtnPanel06 = "Panel 06 Quiz Type 1";
+	String txtBtnPanel07 = "Panel 07 Quiz Type 2";
+	String txtBtnExit    = "Exit";
 	
 	/**
 	 * Create the panel.
@@ -51,7 +56,6 @@ public class panel_00_test extends JPanel {
 		setLayout(null);
 		setFocusable(true);
 		requestFocus();
-		subTitle = "Subject, Type";
 		contentPanel = panel;
 		createGUI();
 	} /* end panel_00_test */
@@ -63,45 +67,42 @@ public class panel_00_test extends JPanel {
 	private void createGUI(){
 		
 		/* adjustable sizing */
-		int x = 3;
-		int y = 5;
+		int borderX = 3;
+		int borderY = 5;
 		int width = start.WIDTH - 9;
 		int height = start.HEIGHT - 30;
+		
 		int elementWidth  = 250;
 		int elementHeight = 35;
-		int elementX = (int)((x + width - elementWidth) * 0.50f);
-		int elementX0 = 4 + 25;
-		int elementX1 = (width + 3) - elementWidth + 50 - 25;
+		int elementX = (int)(elementWidth * 0.5f);
+		int elementX0 = 30;
+		int elementX1 = 250;
 		int elementY = 30;
-		int spread = 55;
 		
-		/* get default font */
-		Graphics g = new BufferedImage(start.WIDTH, start.HEIGHT, BufferedImage.TYPE_INT_RGB).getGraphics();
-		defaultFont = new Font(g.getFont().toString(), 0, 12);
-        g.dispose();
+		int spread = 55;
 		
 		/* title label */
 		lblTitle = new JLabel(start.TITLE);
-		lblTitle.setFont(new Font(defaultFont.toString(), Font.BOLD, (int)(spread * 0.50f)));
+		lblTitle.setFont(new Font(start.defaultFont.toString(), Font.BOLD, (int)(spread * 0.50f)));
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setBounds(elementX, elementY, elementWidth, elementHeight);
 		add(lblTitle);
 		
 		/* subtitle label */
-		lblSubTitle = new JLabel(subTitle);
 		elementY += (int)(spread * 0.50f);
-		lblSubTitle.setFont(new Font(defaultFont.toString(), Font.PLAIN, (int)(spread * 0.25f)));
+		lblSubTitle = new JLabel(txtSubTitle);
+		lblSubTitle.setFont(new Font(start.defaultFont.toString(), Font.PLAIN, (int)(spread * 0.25f)));
 		lblSubTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSubTitle.setBounds(elementX, elementY, elementWidth, elementHeight);
 		add(lblSubTitle);
 		
+		/* align two column layout */
 		elementWidth -= 50;
 		
 		/* panel 01 button */
-		btnPanel01 = new JButton("Panel 01 Sign In");
 		elementY += spread;
+		btnPanel01 = new JButton(txtBtnPanel01);
 		btnPanel01.setBounds(elementX0, elementY, elementWidth, elementHeight);
-		btnPanel01.setBorder(new RoundedBorder(10));
 		btnPanel01.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	CardLayout cardlayout = (CardLayout)(contentPanel.getLayout());
@@ -111,9 +112,8 @@ public class panel_00_test extends JPanel {
 		add(btnPanel01);
 		
 		/* panel 05 button */
-		btnPanel05 = new JButton("Panel 05 Past Results");
+		btnPanel05 = new JButton(txtBtnPanel05);
 		btnPanel05.setBounds(elementX1, elementY, elementWidth, elementHeight);
-		btnPanel05.setBorder(new RoundedBorder(10));
 		btnPanel05.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	CardLayout cardlayout = (CardLayout)(contentPanel.getLayout());
@@ -123,10 +123,9 @@ public class panel_00_test extends JPanel {
 		add(btnPanel05);
 		
 		/* panel 02 button */
-		btnPanel02 = new JButton("Panel 02 Sign Up");
 		elementY += spread;
+		btnPanel02 = new JButton(txtBtnPanel02);
 		btnPanel02.setBounds(elementX0, elementY, elementWidth, elementHeight);
-		btnPanel02.setBorder(new RoundedBorder(10));
 		btnPanel02.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	CardLayout cardlayout = (CardLayout)(contentPanel.getLayout());
@@ -136,9 +135,8 @@ public class panel_00_test extends JPanel {
 		add(btnPanel02);
 		
 		/* panel 06 button */
-		btnPanel06 = new JButton("Panel 06 Quiz Type 1");
+		btnPanel06 = new JButton(txtBtnPanel06);
 		btnPanel06.setBounds(elementX1, elementY, elementWidth, elementHeight);
-		btnPanel06.setBorder(new RoundedBorder(10));
 		btnPanel06.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	CardLayout cardlayout = (CardLayout)(contentPanel.getLayout());
@@ -148,10 +146,9 @@ public class panel_00_test extends JPanel {
 		add(btnPanel06);
 		
 		/* panel 03 button */
-		btnPanel03 = new JButton("Panel 03 Subject");
 		elementY += spread;
+		btnPanel03 = new JButton(txtBtnPanel03);
 		btnPanel03.setBounds(elementX0, elementY, elementWidth, elementHeight);
-		btnPanel03.setBorder(new RoundedBorder(10));
 		btnPanel03.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	CardLayout cardlayout = (CardLayout)(contentPanel.getLayout());
@@ -161,9 +158,8 @@ public class panel_00_test extends JPanel {
 		add(btnPanel03);
 		
 		/* panel 07 button */
-		btnPanel07 = new JButton("Panel 07 Quiz Type 2");
+		btnPanel07 = new JButton(txtBtnPanel07);
 		btnPanel07.setBounds(elementX1, elementY, elementWidth, elementHeight);
-		btnPanel07.setBorder(new RoundedBorder(10));
 		btnPanel07.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	CardLayout cardlayout = (CardLayout)(contentPanel.getLayout());
@@ -173,10 +169,9 @@ public class panel_00_test extends JPanel {
 		add(btnPanel07);
 		
 		/* panel 04 button */
-		btnPanel04 = new JButton("Panel 04 Theme");
 		elementY += spread;
+		btnPanel04 = new JButton(txtBtnPanel04);
 		btnPanel04.setBounds(elementX0, elementY, elementWidth, elementHeight);
-		btnPanel04.setBorder(new RoundedBorder(10));
 		btnPanel04.addActionListener( new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	CardLayout cardlayout = (CardLayout)(contentPanel.getLayout());
@@ -185,25 +180,13 @@ public class panel_00_test extends JPanel {
         });
 		add(btnPanel04);
 		
-		/* panel 08 button */
-		btnPanel08 = new JButton("Panel 08 Empty");
-		btnPanel08.setBounds(elementX1, elementY, elementWidth, elementHeight);
-		btnPanel08.setBorder(new RoundedBorder(10));
-		btnPanel08.addActionListener( new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	CardLayout cardlayout = (CardLayout)(contentPanel.getLayout());
-        		cardlayout.show(contentPanel, "Panel 08");
-            }
-        });
-//		add(btnPanel08);
-		
+		/* align single column layout */
 		elementWidth += 50;
 		
 		/* exit button */
-		btnExit = new JButton("Exit");
 		elementY += spread;
+		btnExit = new JButton(txtBtnExit);
 		btnExit.setBounds(elementX, elementY, elementWidth, elementHeight);
-		btnExit.setBorder(new RoundedBorder(10));
 		ActionListener actExit = new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				System.exit(0);
@@ -213,24 +196,23 @@ public class panel_00_test extends JPanel {
 		add(btnExit);
 		
 		/* return to panel 00 button */
-		btnPanel00 = new JButton("Return to Panel 00");
-		btnPanel00.setBounds(332, 432, 130, 35);
-//				(int)(elementX + elementWidth * 0.6f), (int)(elementY + (spread * 2) - 10),(int)(elementWidth * 0.75f), elementHeight);
-		btnPanel00.setBorder(new RoundedBorder(10));
-		btnPanel00.addActionListener( new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	CardLayout cardlayout = (CardLayout)(contentPanel.getLayout());
-        		cardlayout.show(contentPanel, "Panel 00");
-            }
-        });
-		add(btnPanel00);
+		if(start.DEBUG) {
+		JButton btnPanel00 = new JButton("Return to Panel 00");
+			btnPanel00.setBounds(332, 432, 130, 35);
+			btnPanel00.addActionListener( new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+	            	CardLayout cardlayout = (CardLayout)(contentPanel.getLayout());
+	        		cardlayout.show(contentPanel, "Panel 00");
+	            }
+	        });
+			add(btnPanel00);
+		}
 		
-		/* outline boarder */
-		JPanel conTitle = new JPanel();
-		conTitle.setBounds(x,  y, width, height);
-		titleBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray));
-		conTitle.setBorder(titleBorder);
-		add(conTitle);
+		/* outline border */
+		JPanel panelBorder = new JPanel();
+		panelBorder.setBounds(borderX,  borderY, width, height);
+		panelBorder.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.gray)));
+		add(panelBorder);
 		
 	} /* createGUI */
 	
